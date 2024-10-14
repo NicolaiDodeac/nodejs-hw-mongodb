@@ -8,10 +8,13 @@ import { logger } from './middlewares/logger.js';
 
 export const setupServer = () => {
   const app = express();
-
+  app.use(
+    express.json(),
+    // express.json({ type: ['application/json', 'application/vnd.api+json'] }),
+  );
   app.use(cors());
   app.use(logger);
-  app.use('/contacts', contactsRouter);
+  app.use(contactsRouter);
   app.use(notFoundHandler);
   app.use(errorHandler);
 
