@@ -6,10 +6,12 @@ import {
   upsertContact,
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
+import { parseFilterParams } from '../utils/parseFilterParams.js';
 
 export const getContactsController = async (req, res) => {
   const { page, perPage, sortBy, sortOrder } = req.query;
-  const data = await getContacts({ page, perPage, sortBy, sortOrder });
+  const filter = parseFilterParams(req.query);
+  const data = await getContacts({ page, perPage, sortBy, sortOrder, filter });
 
   res.json({
     status: 200,
