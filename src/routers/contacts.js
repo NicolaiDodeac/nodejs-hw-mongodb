@@ -7,11 +7,13 @@ import {
   addContactSchema,
   updateContactSchema,
 } from '../validation/contacts.js';
+import { parsePaginationParams } from '../middlewares/parsePaginationParams.js';
 
 const contactsRouter = Router();
 
 contactsRouter.get(
   '/contacts',
+  parsePaginationParams,
   ctrlWrapper(contactsController.getContactsController),
 );
 contactsRouter.get(
