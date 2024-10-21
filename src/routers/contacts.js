@@ -8,12 +8,15 @@ import {
   updateContactSchema,
 } from '../validation/contacts.js';
 import { parsePaginationParams } from '../middlewares/parsePaginationParams.js';
+import { parseSortParamsDecorator } from '../utils/parceSortParamsDecorator.js';
+import { sortByListContacts } from '../db/models/Contact.js';
 
 const contactsRouter = Router();
 
 contactsRouter.get(
   '/contacts',
   parsePaginationParams,
+  parseSortParamsDecorator(sortByListContacts),
   ctrlWrapper(contactsController.getContactsController),
 );
 contactsRouter.get(
