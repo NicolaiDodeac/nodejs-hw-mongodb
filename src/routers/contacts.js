@@ -10,41 +10,44 @@ import {
 import { parsePaginationParams } from '../middlewares/parsePaginationParams.js';
 import { parseSortParamsDecorator } from '../utils/parceSortParamsDecorator.js';
 import { sortByListContacts } from '../db/models/Contact.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const contactsRouter = Router();
 
+contactsRouter.use(authenticate);
+
 contactsRouter.get(
-  '/contacts',
+  '/',
   parsePaginationParams,
   parseSortParamsDecorator(sortByListContacts),
   ctrlWrapper(contactsController.getContactsController),
 );
 contactsRouter.get(
-  '/contacts/:id',
+  '/:id',
   isValidId,
   ctrlWrapper(contactsController.getContactsByIdController),
 );
 contactsRouter.post(
-  '/contacts',
+  '/',
   validateBody(addContactSchema),
   ctrlWrapper(contactsController.postContactController),
 );
 
 contactsRouter.patch(
-  '/contacts/:id',
+  '/:id',
   validateBody(updateContactSchema),
   isValidId,
   ctrlWrapper(contactsController.patchContactController),
 );
 
 contactsRouter.delete(
-  '/contacts/:id',
+  '/:id',
   isValidId,
   ctrlWrapper(contactsController.deleteContactController),
 );
 
 // contactsRouter.put(
-//   '/contacts/:id',
+//   '/:id',
 //   isValidId,
 //   ctrlWrapper(contactsController.upsertContactController),
 // );
