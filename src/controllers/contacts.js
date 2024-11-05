@@ -7,7 +7,6 @@ import {
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
-
 export const getContactsController = async (req, res) => {
   const { page, perPage, sortBy, sortOrder } = req.query;
   const { _id: userId } = req.user;
