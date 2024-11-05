@@ -11,6 +11,7 @@ import { parsePaginationParams } from '../middlewares/parsePaginationParams.js';
 import { parseSortParamsDecorator } from '../utils/parceSortParamsDecorator.js';
 import { sortByListContacts } from '../db/models/Contact.js';
 import { authenticate } from '../middlewares/authenticate.js';
+import { upload } from '../middlewares/multer.js';
 
 const contactsRouter = Router();
 
@@ -29,14 +30,16 @@ contactsRouter.get(
 );
 contactsRouter.post(
   '/',
+  upload.single('photo'),
   validateBody(addContactSchema),
   ctrlWrapper(contactsController.postContactController),
 );
 
 contactsRouter.patch(
   '/:id',
-  validateBody(updateContactSchema),
   isValidId,
+  upload.single('photo'),
+  validateBody(updateContactSchema),
   ctrlWrapper(contactsController.patchContactController),
 );
 
@@ -46,10 +49,11 @@ contactsRouter.delete(
   ctrlWrapper(contactsController.deleteContactController),
 );
 
-// contactsRouter.put(
-//   '/:id',
-//   isValidId,
-//   ctrlWrapper(contactsController.upsertContactController),
-// );
+contactsRouter.put(
+  '/:id',
+  isValidId,
+  upload.single('photo'),
+  ctrlWrapper(contactsController.upsertContactController),
+);
 
 export default contactsRouter;

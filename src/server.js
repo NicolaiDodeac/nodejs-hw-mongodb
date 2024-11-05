@@ -7,6 +7,7 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import cookieParser from 'cookie-parser';
 import { logger } from './middlewares/logger.js';
+import { UPLOAD_DIR } from './constants/index.js';
 
 export const setupServer = () => {
   const app = express();
@@ -18,6 +19,7 @@ export const setupServer = () => {
   app.use(logger);
   app.use('/auth', authRouter);
   app.use('/contacts', contactsRouter);
+  app.use('/uploads', express.static(UPLOAD_DIR));
   app.use(notFoundHandler);
   app.use(errorHandler);
 
