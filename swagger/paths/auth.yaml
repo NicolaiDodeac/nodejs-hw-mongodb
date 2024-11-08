@@ -1,0 +1,135 @@
+/auth/register:
+  post:
+    summary: Register a new user
+    tags:
+      - Authentication
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/UserRegister'
+    responses:
+      '201':
+        description: User successfully registered
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/UserResponse'
+      '400':
+        $ref: '../components/responses/400.yaml'
+      '409':
+        description: Conflict - email already exists
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/ErrorResponse'
+
+/auth/login:
+  post:
+    summary: Log in a user
+    tags:
+      - Authentication
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/UserLogin'
+    responses:
+      '200':
+        description: Successful login
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/UserResponse'
+      '401':
+        $ref: '../components/responses/401.yaml'
+      '400':
+        $ref: '../components/responses/400.yaml'
+
+/auth/refresh:
+  post:
+    summary: Refresh user session
+    tags:
+      - Authentication
+    responses:
+      '200':
+        description: Successfully refreshed session
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/UserResponse'
+      '401':
+        $ref: '../components/responses/401.yaml'
+
+/auth/send-reset-email:
+  post:
+    summary: Send a password reset email
+    tags:
+      - Authentication
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/RequestResetEmail'
+    responses:
+      '200':
+        description: Reset email sent
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: Reset email sent successfully
+      '400':
+        $ref: '../components/responses/400.yaml'
+
+/auth/reset-pwd:
+  post:
+    summary: Reset user password
+    tags:
+      - Authentication
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/ResetPassword'
+    responses:
+      '200':
+        description: Password reset successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: Password reset successfully
+      '400':
+        $ref: '../components/responses/400.yaml'
+      '404':
+        $ref: '../components/responses/404.yaml'
+
+/auth/logout:
+  post:
+    summary: Log out a user
+    tags:
+      - Authentication
+    responses:
+      '200':
+        description: Logout successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: Logged out successfully
+      '401':
+        $ref: '../components/responses/401.yaml'

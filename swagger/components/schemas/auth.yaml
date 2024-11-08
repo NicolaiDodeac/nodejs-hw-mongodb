@@ -1,0 +1,76 @@
+UserRegister:
+  type: object
+  required:
+    - name
+    - email
+    - password
+  properties:
+    name:
+      type: string
+      example: John Doe
+    email:
+      type: string
+      format: email
+      example: john@example.com
+    password:
+      type: string
+      example: strongpassword123
+
+UserLogin:
+  type: object
+  required:
+    - email
+    - password
+  properties:
+    email:
+      type: string
+      format: email
+      example: john@example.com
+    password:
+      type: string
+      example: strongpassword123
+
+UserResponse:
+  type: object
+  properties:
+    user:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 60d0fe4f5311236168a109ca
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: john@example.com
+    accessToken:
+      type: string
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+    refreshToken:
+      type: string
+      example: dGhpc2lzYXJlZnJlc2h0b2tlbg
+
+RequestResetEmail:
+  type: object
+  required:
+    - email
+  properties:
+    email:
+      type: string
+      format: email
+      example: john@example.com
+
+ResetPassword:
+  type: object
+  required:
+    - password
+    - token
+  properties:
+    password:
+      type: string
+      example: newpassword123
+    token:
+      type: string
+      example: dGhpc2lzYXJlc2V0dG9rZW4
